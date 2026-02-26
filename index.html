@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTA 5 – Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+
+  /* ════════════════════════════
+     VARIABLES
+  ════════════════════════════ */
+  :root {
+    --gold:   #F4C430;
+    --red:    #C0392B;
+    --green:  #27AE60;
+    --bg:     #080808;
+    --card:   #111111;
+    --card2:  #161616;
+    --text:   #FFFFFF;
+    --muted:  #888888;
+    --border: #222222;
+  }
+
+  /* ════════════════════════════
+     RESET & BASE
+  ════════════════════════════ */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.35;
+  }
+
+  /* ════════════════════════════
+     NAVIGATION BAR
+  ════════════════════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    height: 56px;
+    background: rgba(8, 8, 8, 0.96);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 8px;
+    color: var(--gold);
+    transform: scaleX(1.8);
+    transform-origin: left center;
+    white-space: nowrap;
+    filter: drop-shadow(0 0 8px rgba(244, 196, 48, 0.4));
+  }
+
+  .nav-center {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 1.5px solid #333;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .dot.active  { background: var(--gold); transform: scale(1.3); }
+  .dot:hover   { background: var(--gold); opacity: 0.7; }
+
+  .nav-counter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* ════════════════════════════
+     SLIDES WRAPPER
+  ════════════════════════════ */
+  .slides-container {
+    margin-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .slide {
+    display: none;
+    min-height: calc(100vh - 96px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide.active {
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: var(--gold);
+  }
+
+  /* ════════════════════════════
+     ANIMATIONS
+  ════════════════════════════ */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ════════════════════════════
+     TITLE SLIDE
+  ════════════════════════════ */
+  .slide-title {
+    justify-content: center;
+    padding: 4rem 5rem 4rem 6rem;
+  }
+
+  .slide-title .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    animation: fadeUp 0.5s 0.1s both;
+  }
+
+  .slide-title h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--text);
+    animation: fadeUp 0.5s 0.2s both;
+  }
+
+  .slide-title h1 span { color: var(--gold); display: block; }
+
+  .title-meta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.5s 0.35s both;
+  }
+
+  .meta-pill {
+    padding: 0.4rem 1rem;
+    border: 1.5px solid var(--border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .meta-pill.highlight {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .title-bottom {
+    margin-top: auto;
+    padding-top: 3rem;
+    animation: fadeUp 0.5s 0.45s both;
+  }
+
+  .title-bottom p {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .bg-number {
+    position: absolute;
+    right: 3rem; bottom: -2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30vw;
+    line-height: 1;
+    color: rgba(244, 196, 48, 0.04);
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -4px;
+  }
+
+  /* ════════════════════════════
+     CONTENT SLIDES
+  ════════════════════════════ */
+  .slide-content {
+    padding: 3rem 5rem 3rem 6rem;
+  }
+
+  .slide-header {
+    margin-bottom: 2rem;
+    animation: fadeUp 0.4s 0.05s both;
+  }
+
+  .slide-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .slide-title-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    letter-spacing: 1px;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .slide-subtitle {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* ════════════════════════════
+     BULLET CARDS GRID
+  ════════════════════════════ */
+  .bullets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    flex: 1;
+  }
+
+  .bullet-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.4s both;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .bullet-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .bullet-card:hover {
+    border-color: var(--gold);
+    background: var(--card2);
+  }
+
+  .bullet-card.accent          { border-color: var(--gold); background: rgba(244,196,48,0.06); }
+  .bullet-card.accent::before  { opacity: 1; }
+  .bullet-card.red::before     { background: var(--red); }
+
+  .bullet-card:nth-child(1) { animation-delay: 0.10s; }
+  .bullet-card:nth-child(2) { animation-delay: 0.18s; }
+  .bullet-card:nth-child(3) { animation-delay: 0.26s; }
+  .bullet-card:nth-child(4) { animation-delay: 0.34s; }
+  .bullet-card:nth-child(5) { animation-delay: 0.42s; }
+  .bullet-card:nth-child(6) { animation-delay: 0.50s; }
+
+  .bullet-icon {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .bullet-card p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #CCCCCC;
+  }
+
+  .bullet-card strong { color: var(--text); font-weight: 700; }
+
+  /* ════════════════════════════
+     CONCLUSION SLIDE
+  ════════════════════════════ */
+  .slide-conclusion { padding: 3rem 5rem 3rem 6rem; }
+
+  .verdict {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .verdict-box {
+    flex: 1;
+    min-width: 180px;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .verdict-box h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+  }
+
+  .verdict-box.pro   h4 { color: var(--green); }
+  .verdict-box.con   h4 { color: var(--red); }
+
+  .verdict-box ul {
+    list-style: none;
+    font-size: 0.87rem;
+    line-height: 1.7;
+    color: #CCCCCC;
+  }
+
+  .verdict-box ul li::before    { margin-right: 0.5rem; }
+  .verdict-box.pro   li::before { content: '✔'; color: var(--green); }
+  .verdict-box.con   li::before { content: '✘'; color: var(--red); }
+
+  .final-quote {
+    margin-top: 1.8rem;
+    padding: 1.2rem 1.5rem;
+    border-left: 3px solid var(--gold);
+    background: var(--card);
+    font-size: 1rem;
+    font-style: italic;
+    color: #DDDDDD;
+    line-height: 1.65;
+    animation: fadeUp 0.4s 0.5s both;
+  }
+
+  /* ════════════════════════════
+     FOOTER BAR
+  ════════════════════════════ */
+  .slide-footer {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 50;
+  }
+
+  .slide-footer span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--bg);
+    text-transform: uppercase;
+  }
+
+  .footer-btns { display: flex; gap: 0.8rem; }
+
+  .footer-btn {
+    background: rgba(0,0,0,0.18);
+    border: none;
+    padding: 0.25rem 1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--bg);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+
+  .footer-btn:hover { background: rgba(0,0,0,0.32); }
+
+  /* ════════════════════════════
+     SPEAKER NOTES
+  ════════════════════════════ */
+  .notes-toggle {
+    position: fixed;
+    bottom: 40px; right: 1.5rem;
+    z-index: 200;
+    background: var(--card);
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .notes-toggle:hover { background: rgba(244, 196, 48, 0.1); }
+
+  .notes-panel {
+    position: fixed;
+    bottom: 40px; left: 0; right: 0;
+    z-index: 150;
+    background: #0e0e0e;
+    border-top: 2px solid var(--gold);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .notes-panel.open { max-height: 340px; overflow-y: auto; }
+
+  .notes-inner { padding: 1.8rem 6rem 2rem; }
+
+  .notes-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .notes-script        { display: none; }
+  .notes-script.active { display: block; }
+
+  .notes-script p {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #DDDDDD;
+    margin-bottom: 0.8rem;
+  }
+
+  .notes-script p em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .notes-tip {
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    border-left: 3px solid #333;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ════════════════════════════
+     RESPONSIVE
+  ════════════════════════════ */
+  @media (max-width: 700px) {
+    .slide-title,
+    .slide-content,
+    .slide-conclusion { padding: 2rem 2rem 5rem 2.5rem; }
+    .bullets           { grid-template-columns: 1fr; }
+    .slide-title h1    { font-size: 3.5rem; }
+    .notes-inner       { padding: 1.2rem 1.5rem 1.5rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════
+     NAVIGATION
+══════════════════════════ -->
+<nav>
+  <div class="nav-logo">Grand Theft Auto V</div>
+  <div class="nav-center" id="navDots"></div>
+  <div class="nav-counter" id="slideCounter">1 / 6</div>
+</nav>
+
+<!-- ══════════════════════════
+     SLIDES
+══════════════════════════ -->
+<div class="slides-container" id="slides">
+
+  <!-- ── SLIDE 1: TITLE ── -->
+  <div class="slide slide-title active" data-slide="0">
+    <div class="eyebrow">English Communication Presentation</div>
+    <h1>Grand<br>Theft<br><span>Auto V</span></h1>
+    <div class="title-meta">
+      <div class="meta-pill highlight">GTA 5</div>
+      <div class="meta-pill">Rockstar Games</div>
+      <div class="meta-pill">2013</div>
+      <div class="meta-pill">Open World</div>
+    </div>
+    <div class="title-bottom">
+      <p>A presentation by Djamil</p>
+    </div>
+    <div class="bg-number">V</div>
+  </div>
+
+  <!-- ── SLIDE 2: WHAT IS GTA 5 ── -->
+  <div class="slide slide-content" data-slide="1">
+    <div class="slide-header">
+      <div class="slide-tag">Slide 01 — Introduction</div>
+      <div class="slide-title-text">What is GTA 5?</div>
+      <div class="slide-subtitle">Basic Facts &amp; Background</div>
+    </div>
+    <div class="bullets">
+      <div class="bullet-card">
+        <span class="bullet-icon">📅</span>
+        <p><strong>Released September 2013</strong> — full name: Grand Theft Auto V</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🎮</span>
+        <p><strong>Developed by Rockstar Games</strong> — also known for Red Dead Redemption</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🌆</span>
+        <p><strong>Set in Los Santos</strong> — a fictional city closely based on Los Angeles</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🎯</span>
+        <p><strong>Genre: Open-world action-adventure</strong> — mix of driving, shooting &amp; storytelling</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">📺</span>
+        <p><strong>Available on PS3, PS4, PS5, Xbox &amp; PC</strong> — one of the longest-running games ever</p>
+      </div>
+      <div class="bullet-card accent">
+        <span class="bullet-icon">💰</span>
+        <p><strong>~$265 million development budget</strong> — one of the most expensive games ever made</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3: STORY & CHARACTERS ── -->
+  <div class="slide slide-content" data-slide="2">
+    <div class="slide-header">
+      <div class="slide-tag">Slide 02 — Story</div>
+      <div class="slide-title-text">The Story &amp; Characters</div>
+      <div class="slide-subtitle">Three Playable Protagonists</div>
+    </div>
+    <div class="bullets">
+      <div class="bullet-card accent">
+        <span class="bullet-icon">🔄</span>
+        <p><strong>Unique feature:</strong> You play as THREE different characters and switch between them at any time</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🏡</span>
+        <p><strong>Michael De Santa</strong> — a retired bank robber living in the wealthy suburbs</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🔪</span>
+        <p><strong>Trevor Philips</strong> — a violent, unpredictable criminal living in the desert</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🏙️</span>
+        <p><strong>Franklin Clinton</strong> — a young man from the ghetto trying to escape poverty</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🤝</span>
+        <p>All three characters are <strong>connected</strong> and work together on big heists</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🎬</span>
+        <p>The story explores <strong>crime, betrayal &amp; the American Dream</strong> — very cinematic, ~30–35 hours long</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4: GAMEPLAY ── -->
+  <div class="slide slide-content" data-slide="3">
+    <div class="slide-header">
+      <div class="slide-tag">Slide 03 — Gameplay</div>
+      <div class="slide-title-text">Gameplay &amp; Features</div>
+      <div class="slide-subtitle">What Can You Actually Do?</div>
+    </div>
+    <div class="bullets">
+      <div class="bullet-card">
+        <span class="bullet-icon">🗺️</span>
+        <p><strong>Massive open world</strong> — mountains, city, desert &amp; ocean — all freely accessible</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🚗</span>
+        <p><strong>Drive cars, fly planes, ride bikes</strong>, go scuba diving, play tennis and golf</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🏦</span>
+        <p><strong>Plan heists</strong> — complex multi-step robberies with crew management &amp; strategy</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">⭐</span>
+        <p><strong>Wanted system</strong> — police chase you if you break the law (1 to 5 stars)</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🌐</span>
+        <p><strong>GTA Online</strong> — multiplayer mode with up to 30 players, still very active today</p>
+      </div>
+      <div class="bullet-card accent">
+        <span class="bullet-icon">📐</span>
+        <p>The map is <strong>larger than Red Dead Redemption, San Andreas &amp; GTA 4 combined</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5: IMPACT ── -->
+  <div class="slide slide-content" data-slide="4">
+    <div class="slide-header">
+      <div class="slide-tag">Slide 04 — Legacy</div>
+      <div class="slide-title-text">Impact &amp; Legacy</div>
+      <div class="slide-subtitle">Why is GTA 5 so Important?</div>
+    </div>
+    <div class="bullets">
+      <div class="bullet-card accent">
+        <span class="bullet-icon">📦</span>
+        <p><strong>190+ million copies sold</strong> worldwide — one of the best-selling games of all time</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">💵</span>
+        <p><strong>$800 million in its first 24 hours</strong> — a record-breaking launch</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🏆</span>
+        <p>Changed the industry: proved that <strong>open-world games can be massive blockbusters</strong></p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🎰</span>
+        <p><strong>GTA Online</strong> became its own phenomenon — players still spend millions per month</p>
+      </div>
+      <div class="bullet-card">
+        <span class="bullet-icon">🌍</span>
+        <p>Inspired many other open-world games like <strong>Watch Dogs, Saints Row &amp; more</strong></p>
+      </div>
+      <div class="bullet-card red">
+        <span class="bullet-icon">⚠️</span>
+        <p><strong>Controversial</strong> — criticized for violence &amp; adult content, sparked political debate worldwide</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6: CONCLUSION ── -->
+  <div class="slide slide-conclusion" data-slide="5">
+    <div class="slide-header">
+      <div class="slide-tag">Slide 05 — Conclusion</div>
+      <div class="slide-title-text">My Opinion &amp; Conclusion</div>
+      <div class="slide-subtitle">Is GTA 5 worth playing?</div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box pro">
+        <h4>✔ Pros</h4>
+        <ul>
+          <li>Incredible open world with huge freedom</li>
+          <li>Three-character system makes the story exciting</li>
+          <li>GTA Online keeps the game fresh with updates</li>
+          <li>Best-selling game of all time — proven quality</li>
+        </ul>
+      </div>
+      <div class="verdict-box con">
+        <h4>✘ Cons</h4>
+        <ul>
+          <li>Contains violence &amp; adult language</li>
+          <li>Not suitable for younger players</li>
+          <li>GTA Online can feel like a money grab</li>
+          <li>Some missions feel repetitive</li>
+        </ul>
+      </div>
+ 
+    </div>
+    <div class="final-quote">
+      "GTA 5 is not just a game — it's a virtual world. It gives players complete freedom and tells a story that's as engaging as any Hollywood movie. Despite its controversies, it remains one of the most impressive achievements in gaming history."
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════
+     SPEAKER NOTES
+══════════════════════════ -->
+<button class="notes-toggle" onclick="toggleNotes()" id="notesBtn">📋 Speaker Notes</button>
+
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-inner">
+    <div class="notes-label">🎤 What to say — Slide <span id="notesSlideNum">1</span> of 6</div>
+
+    <div class="notes-script active" id="notes-0">
+      <p><em>Introduction:</em> "Hello everyone, today I'm going to talk about one of the most famous video games ever made — Grand Theft Auto 5, also known as GTA 5."</p>
+      <p><em>Follow-up:</em> "My presentation will cover what the game is, its story, gameplay, and why it became such a huge cultural phenomenon. I'll also share my personal opinion at the end."</p>
+      <div class="notes-tip">💡 Tip: Smile, make eye contact, and speak slowly. Don't rush — you have 5 minutes!</div>
+    </div>
+
+    <div class="notes-script" id="notes-1">
+      <p><em>Opening:</em> "Let me start with the basics. GTA 5 was released in September 2013 by a company called Rockstar Games."</p>
+      <p><em>Continue:</em> "It's an open-world action-adventure game — which means you can explore a huge city freely. The game is set in Los Santos, a fictional city based on Los Angeles."</p>
+      <p><em>Key fact:</em> "What makes GTA 5 special is its enormous budget — about 265 million dollars — making it one of the most expensive games ever produced."</p>
+      <div class="notes-tip">💡 Tip: Stress "$265 million" — it surprises people and makes a great impression.</div>
+    </div>
+
+    <div class="notes-script" id="notes-2">
+      <p><em>Opening:</em> "Now let's talk about the story. GTA 5 has a very unique feature — you play as three different characters and can switch between them at any time."</p>
+      <p><em>Characters:</em> "First, there's Michael, a retired criminal in the suburbs. Then Trevor — a violent, unpredictable man in the desert. And finally Franklin, a young guy trying to escape poverty."</p>
+      <p><em>Connection:</em> "All three work together on big heists. The story is about crime, loyalty, and betrayal — very much like a Hollywood movie."</p>
+      <div class="notes-tip">💡 Tip: "Heist" means a big robbery — mentioning this shows you know the vocabulary.</div>
+    </div>
+
+    <div class="notes-script" id="notes-3">
+      <p><em>Opening:</em> "So what can you actually do in GTA 5? The answer is — almost everything."</p>
+      <p><em>Activities:</em> "You can drive cars, fly planes, ride motorcycles, go scuba diving, or even play golf and tennis. The map is larger than the previous three GTA games combined."</p>
+      <p><em>Online:</em> "GTA Online is the multiplayer mode where up to 30 players share the same world. It's still incredibly popular today, more than 10 years after release."</p>
+      <div class="notes-tip">💡 Tip: "Up to 30 players" sounds very natural in English — use it exactly like that.</div>
+    </div>
+
+    <div class="notes-script" id="notes-4">
+      <p><em>Opening:</em> "GTA 5 didn't just sell well — it changed the entire gaming industry."</p>
+      <p><em>Sales:</em> "The game sold over 190 million copies worldwide. On its very first day, it made 800 million dollars — a world record at the time."</p>
+      <p><em>Controversy:</em> "However, the game is also controversial. It contains a lot of violence and adult content, which led to political debates in many countries."</p>
+      <div class="notes-tip">💡 Tip: "Controversial" is a great B2-level word. Pronounce it: con-TRO-ver-see-al.</div>
+    </div>
+
+    <div class="notes-script" id="notes-5">
+      <p><em>Opening:</em> "To conclude, I want to share my personal opinion on GTA 5."</p>
+      <p><em>Positives:</em> "I think GTA 5 is genuinely impressive. The open world gives incredible freedom, and the three-character system makes the story much more interesting than a typical game."</p>
+      <p><em>Final verdict:</em> "Overall, I believe GTA 5 is a masterpiece of game design — one of the most important games ever created. If you're old enough, it's absolutely worth playing."</p>
+      <p><em>Closing:</em> "Thank you for listening. Does anyone have any questions?"</p>
+      <div class="notes-tip">💡 Tip: End with a confident smile and "Any questions?" — it shows you're comfortable with the topic.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     FOOTER
+══════════════════════════ -->
+<div class="slide-footer">
+  <span id="footerLeft">GTA 5 — English Presentation by Djamil</span>
+  <div class="footer-btns">
+    <button class="footer-btn" onclick="prevSlide()">← Prev</button>
+    <button class="footer-btn" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     JAVASCRIPT
+══════════════════════════ -->
+<script>
+  const slides     = document.querySelectorAll('.slide');
+  const navDotsEl  = document.getElementById('navDots');
+  const counter    = document.getElementById('slideCounter');
+  const footerLeft = document.getElementById('footerLeft');
+  let current = 0;
+
+  const footerLabels = [
+    'GTA 5 — English Presentation by Djamil',
+    'Slide 01 — Introduction',
+    'Slide 02 — Story & Characters',
+    'Slide 03 — Gameplay & Features',
+    'Slide 04 — Impact & Legacy',
+    'Slide 05 — My Opinion & Conclusion'
+  ];
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    navDotsEl.appendChild(dot);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    navDotsEl.children[current].classList.remove('active');
+    const prevNotes = document.getElementById('notes-' + current);
+    if (prevNotes) prevNotes.classList.remove('active');
+
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    navDotsEl.children[current].classList.add('active');
+    counter.textContent    = `${current + 1} / ${slides.length}`;
+    footerLeft.textContent = footerLabels[current];
+    const newNotes = document.getElementById('notes-' + current);
+    if (newNotes) newNotes.classList.add('active');
+    document.getElementById('notesSlideNum').textContent = current + 1;
+  }
+
+  function nextSlide() { goTo(current + 1); }
+  function prevSlide() { goTo(current - 1); }
+
+  function toggleNotes() {
+    const panel = document.getElementById('notesPanel');
+    const btn   = document.getElementById('notesBtn');
+    panel.classList.toggle('open');
+    btn.textContent = panel.classList.contains('open') ? '✕ Hide Notes' : '📋 Speaker Notes';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); nextSlide(); }
+    if (['ArrowLeft',  'ArrowUp'       ].includes(e.key)) { e.preventDefault(); prevSlide(); }
+  });
+</script>
+</body>
+</html>
